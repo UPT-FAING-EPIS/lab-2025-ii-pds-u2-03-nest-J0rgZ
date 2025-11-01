@@ -70,14 +70,14 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Bump a package name for publishing: create a temporary package with new name
-          jq '.name = "@${{ github.repository_owner }}/payment_cabrera" | .version = "0.0.0-" + (env.GITHUB_RUN_NUMBER|tostring)' package.json > package.temp.json
+          jq '.name = "@${{ github.repository_owner }}/payment_briceno" | .version = "0.0.0-" + (env.GITHUB_RUN_NUMBER|tostring)' package.json > package.temp.json
           mv package.temp.json package.json
           npm ci || npm install
           # Configure npm to publish to GitHub Packages for this repository owner
-          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
+          echo "@${{ github.repository_owner }}:registry=https://npm.pkg.github.com/" > ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
           # publish to GitHub Packages (package.json.name already changed)
-          npm publish --access=restricted --registry=https://npm.pkg.github.com/
+          npm publish --access=restricted
 
       - name: Prepare and publish atm package
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -85,10 +85,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          jq '.name = "@${{ github.repository_owner }}/atm_cabrera" | .version = "0.0.0-" + (env.GITHUB_RUN_NUMBER|tostring)' package.json > package.temp.json
+          jq '.name = "@${{ github.repository_owner }}/atm_briceno" | .version = "0.0.0-" + (env.GITHUB_RUN_NUMBER|tostring)' package.json > package.temp.json
           mv package.temp.json package.json
           npm ci || npm install
-          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
-          npm publish --access=restricted --registry=https://npm.pkg.github.com/
-      #este workflow maneja paquetes NPM y 'nuget'efwwf
+          echo "@${{ github.repository_owner }}:registry=https://npm.pkg.github.com/" > ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+          npm publish --access=restricted
+      # Este workflow maneja paquetes NPM y nuget

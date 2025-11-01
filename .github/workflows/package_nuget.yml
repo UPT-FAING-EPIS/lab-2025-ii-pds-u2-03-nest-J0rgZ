@@ -1,4 +1,5 @@
 name: Actividad02 - Paquetes NPM y pruebas
+# Workflow para publicar paquetes NPM (no NuGet) en GitHub Packages
 
 on:
   push:

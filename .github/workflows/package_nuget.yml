@@ -70,7 +70,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Bump a package name for publishing: create a temporary package with new name
-          jq '.name = "@${{ github.repository_owner }}/payment_cabrera" | .version = "0.0.0-" + (env.GITHUB_RUN_NUMBER|tostring)' package.json > package.temp.json
+          jq '.name = "@${{ github.repository_owner }}/payment_briceño" | .version = "0.0.0-" + (env.GITHUB_RUN_NUMBER|tostring)' package.json > package.temp.json
           mv package.temp.json package.json
           npm ci || npm install
           # Configure npm to publish to GitHub Packages for this repository owner
@@ -85,7 +85,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          jq '.name = "@${{ github.repository_owner }}/atm_cabrera" | .version = "0.0.0-" + (env.GITHUB_RUN_NUMBER|tostring)' package.json > package.temp.json
+          jq '.name = "@${{ github.repository_owner }}/atm_briceño" | .version = "0.0.0-" + (env.GITHUB_RUN_NUMBER|tostring)' package.json > package.temp.json
           mv package.temp.json package.json
           npm ci || npm install
           echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
